@@ -29,13 +29,13 @@ IBM Bob・Claude Code・OpenAI Codex などの AI アシスタントが、**Zenn
 
 ```bash
 # グローバルインストール（すべてのプロジェクトで使用可能）
-npx skills add fuukaiyuu/japanese-tech-blog -g -y
+npx skills add funhere/japanese-tech-blog -g -y
 ```
 
 ### 手動インストール
 
 ```bash
-git clone https://github.com/fuukaiyuu/japanese-tech-blog.git
+git clone https://github.com/funhere/japanese-tech-blog.git
 
 # IBM Bob
 cp -r japanese-tech-blog ~/.bob/skills/japanese-tech-blog/
@@ -92,4 +92,4 @@ PR 歓迎です。`SKILL.md` を変更した際は、エージェントにサン
 
 ## ライセンス
 
-[MIT](LICENSE) © fuukaiyuu
+[MIT](LICENSE) © funhere
