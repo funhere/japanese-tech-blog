@@ -1,6 +1,6 @@
 {
   "name": "japanese-tech-blog",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Agent skill for writing high-quality Japanese technical blog posts (Zenn / Qiita / note)",
   "keywords": [
     "agent-skill",
@@ -14,15 +14,15 @@
     "claude",
     "codex"
   ],
-  "author": "funhere",
+  "author": "fuukaiyuu",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/funhere/japanese-tech-blog.git"
+    "url": "https://github.com/fuukaiyuu/japanese-tech-blog.git"
   },
-  "homepage": "https://github.com/funhere/japanese-tech-blog#readme",
+  "homepage": "https://github.com/fuukaiyuu/japanese-tech-blog#readme",
   "bugs": {
-    "url": "https://github.com/funhere/japanese-tech-blog/issues"
+    "url": "https://github.com/fuukaiyuu/japanese-tech-blog/issues"
   },
   "skill": {
     "name": "japanese-tech-blog",
@@ -33,5 +33,8 @@
     "examples": [
       "examples/sample-article.md"
     ]
+  },
+  "dependencies": {
+    "sharp": "^0.35.2"
   }
 }

@@ -22,6 +22,7 @@
 | SEO タイトル設計 | 5 種類のタイトルパターン + キーワード配置指針 |
 | 記事構造テンプレート | ハウツー型・概念解説型・比較型の 3 種類 |
 | よくある落とし穴ガイド | 前置きの長すぎ・コード説明なし・まとめの薄さ等の回避策 |
+| **記事画像の自動生成** | 記事の内容に応じて 1〜4 枚の技術図解を生成し、DALL·E / Midjourney / Stable Diffusion 対応のプロンプトを出力 |
 
 ---
 
@@ -126,6 +127,54 @@ Qiita 向け日本語記事を書いて。
 
 ---
 
+## 記事画像の自動生成
+
+記事執筆後、スキルはコンテンツに合わせた **1〜4 枚のプロフェッショナルな技術図解プロンプト** を自動出力します。
+そのまま DALL·E・Midjourney・Stable Diffusion に貼り付けて使用できます。
+
+### 生成される画像の種類
+
+| 種類 | 配置場所 | 使用条件 |
+|---|---|---|
+| **OGP / アイキャッチ** | 記事タイトル直下 | 全記事 |
+| **アーキテクチャ図** | アーキテクチャセクション冒頭 | システム・構成解説記事 |
+| **フロー図** | 手順セクション冒頭 | ハウツー・プロセス記事 |
+| **比較図** | 比較セクション内 | 比較記事のみ |
+
+### スタイル仕様（全画像共通）
+
+| 要素 | 仕様 |
+|---|---|
+| 背景 | 白またはライトグレー |
+| 主色 | ダークネイビーテキスト、アクセントカラー `#3b82f6`（青） |
+| フォント | サンセリフ体、英語または日本語のラベル |
+| 禁止 | イラスト・キャラクター・グラデーション・人物 |
+
+### 出力イメージ
+
+```
+---
+## 🖼 生成する画像（3 枚）
+
+### 画像 1 — アイキャッチ
+配置：記事タイトル直下
+ファイル名：docker-compose-intro-hero-01.png
+プロンプト：
+A clean, professional technical diagram for a Japanese tech blog article about
+Docker Compose. Shows interconnected service containers (app, db, proxy) on a
+white background. Style: minimalist flat design, dark navy text, blue (#3b82f6)
+accent arrows. Text: "Docker Compose" in English, sans-serif. No people, no gradients.
+
+### 画像 2 — アーキテクチャ図
+配置：「Docker Compose とは」セクション冒頭
+ファイル名：docker-compose-intro-architecture-01.png
+プロンプト：
+...
+---
+```
+
+---
+
 ## ファイル構成
 
 ```
@@ -134,7 +183,10 @@ japanese-tech-blog/
 ├── references/
 │   └── article-templates.md      # 記事テンプレート 3 種 + プラットフォーム記法チートシート
 ├── examples/
-│   └── sample-article.md         # サンプル生成記事（Docker Compose 入門）
+│   ├── sample-article.md         # サンプル生成記事（画像プレースホルダー付き）
+│   └── images/                   # 生成した画像を配置（DALL·E / Midjourney / SD）
+│       ├── docker-compose-intro-hero-01.png
+│       └── docker-compose-intro-architecture-01.png
 ├── README.md                      # 英語 README
 ├── README.ja.md                   # 本ファイル（日本語）
 ├── README.zh.md                   # 中国語 README

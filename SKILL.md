@@ -135,6 +135,151 @@ description: >-
 
 ---
 
+## 記事画像の自動生成
+
+記事の内容に合わせてプロフェッショナルな技術図解を自動生成します。
+図解は記事の理解を助け、視覚的な専門性を高めることを目的とします。
+
+### 生成する画像の種類と数
+
+記事の長さと内容に応じて、**2〜4 枚**を目安に生成します。過剰な挿絵は読者の集中を妨げるため、
+情報密度が高い箇所や、文章だけでは伝わりにくい構造・関係性にのみ使用します。
+
+| 記事の長さ | 推奨画像数 |
+|---|---|
+| 1000〜1500 字（短め） | 1〜2 枚 |
+| 2000〜3000 字（標準） | 2〜3 枚 |
+| 3000 字以上（詳細） | 3〜4 枚 |
+
+### 配置ルール
+
+各画像は以下のいずれかの役割を持つ場所に配置します：
+
+1. **OGP / アイキャッチ** — 記事タイトル直下。記事の主題を一目で示す技術テーマ図。
+2. **アーキテクチャ図** — システム全体の構成や、コンポーネント間の関係を示す図。
+3. **フロー図** — 手順・ライフサイクル・データフローを示す図。
+4. **比較図** — 2つ以上の技術・手法の違いを並べた図（比較記事のみ）。
+
+同じ種類の画像を複数使用しないこと。記事に必要のない種類はスキップします。
+
+### 画像生成プロンプトの設計原則
+
+生成画像は **技術的厳密さ・視覚的清潔感・プロフェッショナルな雰囲気** を優先します。
+
+**スタイル指定（共通）:**
+```
+Style: clean technical diagram, professional, minimalist
+Color palette: white or light gray background, dark navy / slate text,
+  accent in #3b82f6 (blue) or #10b981 (green)
+Font in diagram: English or Japanese, sans-serif, clear and legible
+No decorative illustrations, no cartoon elements, no gradients
+```
+
+**文字言語:** 図内のラベル・注釈は **英語または日本語** を使用します。
+両言語を混在させる場合は、メインラベルを英語・補足説明を日本語とします。
+
+### 画像生成プロンプトテンプレート
+
+記事生成後、以下のテンプレートを埋めて各画像のプロンプトを出力します。
+
+**アイキャッチ画像:**
+```
+A clean, professional technical diagram for a Japanese tech blog article about [主題].
+The image shows [主題を象徴するアイコンまたは構成図].
+Style: minimalist, flat design, white background, dark navy text, blue accent (#3b82f6).
+Text in the image: "[記事タイトルの英訳または主要キーワード]" in English, sans-serif.
+No people, no decorations, no gradients.
+```
+
+**アーキテクチャ図:**
+```
+A clean architecture diagram showing [システム名またはコンポーネント構成].
+Components: [コンポーネントA] → [コンポーネントB] → [コンポーネントC].
+Style: professional, minimalist, white background, boxes with rounded corners,
+  arrows indicating data flow, labels in English (or Japanese).
+Color: navy boxes, blue (#3b82f6) arrows, light gray (#f1f5f9) background panels.
+```
+
+**フロー図:**
+```
+A professional flowchart showing the [プロセス名] process.
+Steps: [ステップ1] → [ステップ2] → [ステップ3] → [ステップ4].
+Style: clean, technical, minimal, white background, rectangular process boxes,
+  diamond decision nodes if branching, sans-serif labels in English or Japanese.
+Color: dark navy text, blue (#3b82f6) primary flow arrows.
+```
+
+**比較図:**
+```
+A professional side-by-side comparison diagram of [技術A] vs [技術B].
+Left column: [技術A] — key properties: [特徴1], [特徴2], [特徴3].
+Right column: [技術B] — key properties: [特徴1], [特徴2], [特徴3].
+Style: clean table or two-panel layout, white background, navy headers,
+  checkmarks (✓) and crosses (✗) for feature comparison, sans-serif font.
+```
+
+### 記事への画像の組み込み方
+
+画像が生成済みの場合は、記事本文の対応する箇所に以下の形式で直接埋め込みます：
+
+```markdown
+![画像の説明（日本語）](images/[ファイル名].png)
+*[キャプション：図が示す内容を 1 行で]*
+```
+
+画像がまだ未生成の場合は、プレースホルダーとして挿入します：
+
+```markdown
+<!-- IMAGE: [画像の種類] -->
+![画像の説明（日本語）](images/[ファイル名].png)
+*[キャプション：図が示す内容を 1 行で]*
+```
+
+ファイル名の命名規則：`[記事スラッグ]-[種類]-[連番].png`
+例：`docker-compose-intro-architecture-01.png`
+
+### SVG → PNG 変換ワークフロー
+
+AI が図解を生成する際は、以下の順序で処理します：
+
+1. **SVG 設計** — 記事の内容に合わせたスタイル仕様（白背景・ネイビー・`#3b82f6` 青アクセント）で SVG を設計・生成する
+2. **HTML プレビュー** — `create_html_artifact` ツールで SVG を HTML としてレンダリングし、ユーザーが確認できる状態にする
+3. **PNG エクスポート** — 以下のいずれかの方法で PNG に変換する：
+   - **ブラウザ経由（推奨）:** 表示された画像を右クリック → 「名前を付けて画像を保存」
+   - **Node.js スクリプト:** `examples/images/export-png.js` を実行（`sharp` 使用、ブラウザ不要）
+     ```bash
+     cd examples/images
+     npm install sharp
+     node export-png.js
+     ```
+4. **ファイル配置** — 生成した PNG を `examples/images/` に保存し、記事の `![...]()` 参照から `<!-- IMAGE: ... -->` コメントを除去する
+
+### 出力フォーマット（画像あり）
+
+記事の執筆完了後、以下の形式で画像生成情報をまとめて出力します：
+
+```
+---
+## 🖼 生成する画像（[N] 枚）
+
+### 画像 1 — アイキャッチ
+配置：記事タイトル直下
+ファイル名：[ファイル名]
+プロンプト：
+[英語プロンプト全文]
+
+### 画像 2 — アーキテクチャ図
+配置：「[セクション名]」セクション冒頭
+ファイル名：[ファイル名]
+プロンプト：
+[英語プロンプト全文]
+
+...
+---
+```
+
+---
+
 ## よくある落とし穴と対処
 
 | 落とし穴 | 対処 |
@@ -161,7 +306,13 @@ description: >-
    - 上記テンプレートと文体ガイドラインに従って完全な記事を生成する
    - プラットフォーム固有の記法（Zenn の `:::message` 等）を適切に使用する
    - コードが含まれる場合は必ず言語名付きのコードブロックを使う
+   - 画像プレースホルダー（`<!-- IMAGE: ... -->`）を適切な箇所に挿入する
 
-3. **後処理の提案**（記事生成後に一言添える）
+3. **画像生成フェーズ**
+   - 「記事画像の自動生成」セクションのルールに従い、画像の種類・枚数を決定する
+   - 各画像の生成プロンプトを上記の出力フォーマットで出力する
+   - 画像はユーザーが DALL·E・Midjourney・Stable Diffusion 等のツールで生成できる
+
+4. **後処理の提案**（記事生成後に一言添える）
    - タイトルの改善案（2〜3 パターン）
    - 追加できるセクションや改善点の簡単なメモ

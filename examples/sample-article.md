@@ -2,6 +2,9 @@
 
 > このファイルは `japanese-tech-blog` スキルが生成する記事スタイルのサンプルです。
 
+![Docker Compose を使ったローカル開発環境のアイキャッチ図](images/docker-compose-intro-hero-01.png)
+*Docker Compose で app コンテナと db コンテナを一発起動する*
+
 ---
 
 ## はじめに
@@ -29,6 +32,9 @@
 Docker Compose は、複数のコンテナをまとめて定義・起動するためのツールです。
 `docker-compose.yml` という設定ファイルに各サービスの構成を書くことで、
 コマンド一つで環境全体を立ち上げられます。
+
+![Docker Compose のサービス構成図：app コンテナと db コンテナの関係](images/docker-compose-intro-architecture-01.png)
+*図1：docker-compose.yml で定義した app（Node.js）と db（PostgreSQL）の構成。volumes でデータを永続化し、depends_on で起動順を制御する。*
 
 ## 手順
 
@@ -129,3 +135,4 @@ my-app-db-1   postgres:16      "docker-entrypoint.s…"   Up
 
 - [Docker Compose 公式ドキュメント](https://docs.docker.com/compose/)
 - [Compose ファイルリファレンス](https://docs.docker.com/compose/compose-file/)
+

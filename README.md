@@ -23,6 +23,7 @@
 | SEO title design | 5 title patterns + keyword placement guidelines |
 | Article structure templates | How-to, concept explainer, and comparison — 3 templates |
 | Common pitfall guide | Avoiding long intros, unexplained code, weak summaries, and more |
+| **Auto image generation** | Generates 1–4 professional technical diagrams per article with ready-to-use prompts for DALL·E / Midjourney / Stable Diffusion |
 
 ---
 
@@ -126,6 +127,54 @@ The skill activates automatically when you use keywords like:
 
 ---
 
+## Auto Image Generation
+
+After writing the article, the skill automatically produces **1–4 professional technical diagram prompts** — one per meaningful visual opportunity. These are ready to paste into DALL·E, Midjourney, or Stable Diffusion.
+
+### Image types
+
+| Type | Placement | When used |
+|---|---|---|
+| **OGP / Hero image** | Below article title | Every article |
+| **Architecture diagram** | Opening of the architecture section | System/component articles |
+| **Flowchart** | Opening of the step-by-step section | How-to / process articles |
+| **Comparison diagram** | Inside the comparison section | Comparison articles only |
+
+### Style specification (all images)
+
+All prompts enforce a consistent professional look:
+- **Background:** white or light gray
+- **Colors:** dark navy text, `#3b82f6` blue accents, `#10b981` green for success states
+- **Typography:** sans-serif, clean and legible — labels in **English or Japanese**
+- **No** cartoons, decorations, gradients, or people
+
+### Output format
+
+After the article body, the skill outputs a block like this:
+
+```
+---
+## 🖼 Images to generate (3)
+
+### Image 1 — OGP / Hero
+Placement: below article title
+Filename: docker-compose-intro-hero-01.png
+Prompt:
+A clean, professional technical diagram for a Japanese tech blog article about
+Docker Compose. Shows interconnected service containers (app, db, proxy) on a
+white background. Style: minimalist flat design, dark navy text, blue (#3b82f6)
+accent arrows. Text: "Docker Compose" in English, sans-serif. No people, no gradients.
+
+### Image 2 — Architecture diagram
+Placement: opening of "Docker Compose とは" section
+Filename: docker-compose-intro-architecture-01.png
+Prompt:
+...
+---
+```
+
+---
+
 ## File structure
 
 ```
@@ -134,7 +183,10 @@ japanese-tech-blog/
 ├── references/
 │   └── article-templates.md      # 3 article templates + platform markup cheatsheets
 ├── examples/
-│   └── sample-article.md         # Sample generated article
+│   ├── sample-article.md         # Sample generated article (with image placeholders)
+│   └── images/                   # Place generated images here (DALL·E / Midjourney / SD)
+│       ├── docker-compose-intro-hero-01.png
+│       └── docker-compose-intro-architecture-01.png
 ├── README.md                      # This file (English)
 ├── README.ja.md                   # Japanese README
 ├── README.zh.md                   # Chinese README
