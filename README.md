@@ -140,4 +140,4 @@ PRs welcome. Please keep the core `SKILL.md` under 500 lines and test changes by
 
 ## License
 
-[MIT](LICENSE) © fuukaiyuu
+[MIT](LICENSE) © 
