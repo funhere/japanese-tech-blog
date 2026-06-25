@@ -30,10 +30,10 @@ It encodes:
 
 ```bash
 # Global install — available in all projects
-npx skills add fuukaiyuu/japanese-tech-blog -g -y
+npx skills add funhere/japanese-tech-blog -g -y
 
 # Or: project-local install
-npx skills add fuukaiyuu/japanese-tech-blog -y
+npx skills add funhere/japanese-tech-blog -y
 ```
 
 #### Manual install (any agent with a skills directory)
@@ -57,7 +57,7 @@ cp -r . ~/.codex/skills/japanese-tech-blog/
 #### Direct clone
 
 ```bash
-git clone https://github.com/fuukaiyuu/japanese-tech-blog.git
+git clone https://github.com/funhere/japanese-tech-blog.git
 cd japanese-tech-blog
 # then copy to your agent's skills directory as above
 ```
@@ -109,7 +109,7 @@ japanese-tech-blog/
 
 ```bash
 # IBM Bob / Claude Code（グローバルインストール）
-npx skills add fuukaiyuu/japanese-tech-blog -g -y
+npx skills add funhere/japanese-tech-blog -g -y
 ```
 
 ### 使い方
@@ -129,7 +129,7 @@ Zenn 向けに uv を使った Python 開発環境の構築方法を記事にし
 
 ```bash
 # 安装（IBM Bob / Claude Code）
-npx skills add fuukaiyuu/japanese-tech-blog -g -y
+npx skills add funhere/japanese-tech-blog -g -y
 ```
 
 ---
